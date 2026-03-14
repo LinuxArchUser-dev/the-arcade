@@ -3,10 +3,9 @@
 <head>
 <title>Pixel Test</title>
 </head>
-
 <body>
 
-<canvas id="screen" width="640" height="480" style="border:1px solid black;"</canvas>
+<canvas id="screen" width="1280" height="720" style="border:1px solid black;"</canvas>
 
 <script>
 const canvas = document.getElementById("screen");
@@ -14,35 +13,59 @@ const ctx = canvas.getContext("2d");
 var pos_y = 50;
 var gravity = .98;
 var velocity = 0;
-var pipe_x = [100, 200,300, 400, 500, 600, 700];
-var pipe_y = [Math.random() * 300, Math.random() * 300, Math.random() * 300, Math.random() * 300, Math.random() * 300, Math.random() * 300, Math.random() * 300]
+var pipe_x = [200, 400,600, 800, 1000, 1200, 1400, 1600];
+var has_pipe_given_score = [false, false,false,false,false,false,false,false];
+var pipe_y = [Math.random() * 300, Math.random() * 300, Math.random() * 300, Math.random() * 300, Math.random() * 300, Math.random() * 300,  Math.random() * 300,Math.random() * 300]
 // draw one pixel
-ctx.fillStyle = "red";
-ctx.fillRect(50, pos_y, 10, 10);
+ctx.font = "40px serif";
+var score = 0;
 function clearScreen() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 function drawPipe(x, y){
-	ctx.fillRect(x, y - 640, 30, 640);
-	ctx.fillRect(x, y + 50, 30, 640);
+	ctx.fillStyle = "green";
+	ctx.fillRect(x, y - canvas.height, 30, canvas.height);
+	ctx.fillRect(x, y + 200, 30, canvas.height);
 }
-function gameLoop(){
-	clearScreen();
-	velocity += gravity;
-	pos_y += velocity;
-	ctx.fillRect(30, pos_y, 10, 10);
-	for(let i = 0; i < pipe_x.length; i++){
-		drawPipe(pipe_x[i], pipe_y[i]);
-		pipe_x[i] -= 1;
-		if(pipe_x[i] <= -100){
-			pipe_x[i] = 700;
-		}
-	}
-	document.addEventListener('keydown', function(event) {
+
+document.addEventListener('touchstart', function(event) {
+    velocity = -10;
+});
+document.addEventListener('keydown', function(event) {
   		if (event.code === 'Space' || event.code === 'ArrowUp') {
     			velocity = -10;
   		}
 	});
+function gameLoop(){
+	clearScreen();
+	ctx.fillStyle = "lightblue";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	velocity += gravity;
+	pos_y += velocity;
+	ctx.fillStyle = "yellow";
+	ctx.fillRect(30, pos_y, 10, 10);
+	for(let i = 0; i < pipe_x.length; i++){
+		drawPipe(pipe_x[i], pipe_y[i]);
+		pipe_x[i] -= 1;
+		if(pipe_x[i] <= -200){
+			pipe_x[i] = 1400;
+			has_pipe_given_score[i] = false;
+		}
+		if(pipe_x[i] <= -30 && has_pipe_given_score[i] == false){
+			score++;
+			has_pipe_given_score[i] = true;
+		}
+		if(pipe_x[i] >= -30 && pipe_x[i] <= 40){
+			if(pos_y >= pipe_y[i] + 170 || pos_y <= pipe_y[i]){
+				window.location.href = "index.html"
+			}
+		}
+	}
+	if(pos_y >= canvas.height){
+		window.location.href = "index.html";
+	}
+	ctx.fillStyle = "white"
+	ctx.fillText(score.toString(), 30, 50);
 	requestAnimationFrame(gameLoop);
 }
 gameLoop();
