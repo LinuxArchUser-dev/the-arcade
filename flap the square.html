@@ -32,9 +32,7 @@ function drawPipe(x, y){
 document.addEventListener('touchstart', function(event) {
     velocity = -10;
 });
-document.addEventListener("touchmove", function(event) {
-  event.preventDefault();
-}, { passive: false });
+
 document.addEventListener('keydown', function(event) {
   		if (event.code === 'Space' || event.code === 'ArrowUp') {
     			velocity = -10;
