@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pixel Test</title>
+</head>
+<body>
+
+
+<canvas id="screen" width="1280" height="720" style="border:1px solid black;"</canvas>
+
+<script>
+const canvas = document.getElementById("screen");
+const ctx = canvas.getContext("2d");
+var pos_y = 50;
+var ball_y = 360;
+var ball_x = 640;
+var ball_vel_x = -3;
+var ball_vel_y = -3;
+var enemy_pos_y = 50;
+ctx.font = "40px serif";
+var score = 0;
+function clearScreen() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+var arrow_down = false;
+var arrow_up = false;
+var last_x = 0;
+var last_y = 0;
+var enemy_score = 0;
+document.addEventListener('keydown', function(event) {
+  		if (event.code === 'ArrowUp') {
+    			arrow_up = true;
+  		}
+  		if (event.code === 'ArrowDown') {
+    			arrow_down = true;
+  		}
+	});
+document.addEventListener('keyup', function(event) {
+  		if (event.code === 'ArrowUp') {
+    			arrow_up = false;
+  		}
+  		if (event.code === 'ArrowDown') {
+    			arrow_down = false;
+  		}
+	});
+function gameLoop(){
+	clearScreen();
+	if(arrow_down && pos_y <= 720-80){
+		pos_y+=5;
+	}
+	if(arrow_up && pos_y >= 0){
+		pos_y-=5;
+	}
+	ball_x += ball_vel_x;
+	ball_y += ball_vel_y;
+	let dx = ball_x - last_x;
+	let dy = ball_y - last_y;
+	last_y = ball_y;
+	last_x = ball_x;
+	let predicted_y = ball_y + (1270 - ball_x) * (dy / dx);
+	if(ball_y <= 0 && ball_vel_y < 0){
+		ball_vel_y *= -1;
+	}
+	if(ball_y >= 710 && ball_vel_y > 0){
+		ball_vel_y *= -1;
+	}
+	if(ball_x <= 10 && ball_y >= pos_y && ball_y <= pos_y + 80 && ball_vel_x < 0){
+		ball_vel_x *= -1;
+		ball_vel_y += Math.random() * 1;
+	}
+	if(ball_x >= 1270 && ball_vel_x > 0 && ball_y >= enemy_pos_y && ball_y <= enemy_pos_y + 80){
+		ball_vel_x *= -1;
+		ball_vel_y += Math.random() * 1;
+	}
+	if(ball_x <= 0){
+		ball_x = 640;
+		ball_y = 360;
+		enemy_score++;
+	}
+	if(ball_x >= 1280){
+		ball_x = 640;
+		ball_y = 360;
+		score++;
+	}
+	if(predicted_y > enemy_pos_y && ball_vel_x > 0 && enemy_pos_y <= 720-80){
+		enemy_pos_y += 3;
+	}
+	if(predicted_y < enemy_pos_y  && ball_vel_x > 0 && enemy_pos_y >= 0){
+		enemy_pos_y -= 3;
+	}
+	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, pos_y, 10, 80);
+	ctx.fillRect(1270, enemy_pos_y, 10, 80)
+	ctx.fillRect(ball_x, ball_y, 10, 10);
+	ctx.fillText(score.toString(), 600, 50);
+	ctx.fillText(enemy_score.toString(), 680, 50);
+	requestAnimationFrame(gameLoop);
+}
+gameLoop();
+</script>
+
+</body>
+</html>
