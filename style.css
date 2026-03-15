@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: black;
+  color: #0ff;
+  font-family: 'Press Start 2P', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  margin: 40px 0 20px;
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+  animation: glow 1.5s infinite alternate;
+}
+
+canvas {
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  background: black;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #0ff inset;
+  margin-bottom: 20px;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+  animation: glow 1.5s infinite alternate;
+}
+
+button, a {
+  background: #0ff;
+  color: black;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover, a:hover {
+  background: #0aa;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+  transform: scale(1.05);
+}
+
+p, .description {
+  max-width: 800px;
+  text-align: center;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin: 0 20px 30px;
+}
+
+footer {
+  margin-top: auto;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #0aa;
+  text-align: center;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff; }
+  to { text-shadow: 0 0 15px #0ff, 0 0 30px #0ff; }
+}
