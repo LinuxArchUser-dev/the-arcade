@@ -90,11 +90,15 @@ function gameLoop(){
 	if(ball_x <= 0){
 		ball_x = 640;
 		ball_y = 360;
+		ball_vel_x = -1;
+		ball_vel_y = -1;
 		enemy_score++;
 	}
 	if(ball_x >= 1280){
 		ball_x = 640;
 		ball_y = 360;
+		ball_vel_x = -1;
+		ball_vel_y = -1;
 		score++;
 	}
 	//if(predicted_y > enemy_pos_y && ball_vel_x > 0 && enemy_pos_y <= 720-80){
