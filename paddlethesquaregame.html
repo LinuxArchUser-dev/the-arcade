@@ -59,6 +59,7 @@ function gameLoop(){
 	let dy = ball_y - last_y;
 	last_y = ball_y;
 	last_x = ball_x;
+	enemy_pos_y = ball_y- 40;
 	let predicted_y = ball_y + (1270 - ball_x) * (dy / dx);
 	if(ball_y <= 0 && ball_vel_y < 0){
 		ball_vel_y *= -1;
@@ -102,7 +103,6 @@ function gameLoop(){
 //	if(predicted_y < enemy_pos_y  && ball_vel_x > 0 && enemy_pos_y >= 0){
 //		enemy_pos_y -= 3;
 //	}
-	enemy_pos_y = ball_y;
 	
 	ctx.fillStyle = "black";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
