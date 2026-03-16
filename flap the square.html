@@ -15,7 +15,7 @@
 const canvas = document.getElementById("screen");
 const ctx = canvas.getContext("2d");
 var pos_y = 50;
-var gravity = .98;
+var gravity = .5;
 var velocity = 0;
 var pipe_x = [200, 400,600, 800, 1000, 1200, 1400, 1600];
 var has_pipe_given_score = [false, false,false,false,false,false,false,false];
@@ -49,7 +49,7 @@ function gameLoop(){
 	ctx.fillRect(30, pos_y, 10, 10);
 	for(let i = 0; i < pipe_x.length; i++){
 		drawPipe(pipe_x[i], pipe_y[i]);
-		pipe_x[i] -= 1;
+		pipe_x[i] -= 5;
 		if(pipe_x[i] <= -200){
 			pipe_x[i] = 1400;
 			has_pipe_given_score[i] = false;
